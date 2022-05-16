@@ -58,6 +58,7 @@ def compress(bd, r, fn, o):
 
 
 def main(basedir=os.getcwd(), overwrite=''):
+    global compress_count
     print('Selected Folder', '===============', basedir, '===============', sep='\n')
     # loop files
     count = 0
@@ -71,6 +72,7 @@ def main(basedir=os.getcwd(), overwrite=''):
     print('Total video scanned:', count)
     print('Total video compressed:', compress_count)
     print('Completed')
+    compress_count = 0
 
 
 if __name__ == '__main__':
