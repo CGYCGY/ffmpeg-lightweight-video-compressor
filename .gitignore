@@ -1,2 +1,6 @@
 # IDE config
 /.idea/
+# Build files
+/build/
+/dist/
+/main.spec
