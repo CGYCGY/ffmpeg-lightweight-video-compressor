@@ -9,7 +9,8 @@ This project requires [FFmpeg](https://ffmpeg.org/download.html) to run, [FFmpeg
 ## Instruction
 
 1. Start the program by:
-   - Run `python main.py` to start
+   - Run `python main.py`
+   - Launch [ffmpeg-lightweight-video-compressor.exe](https://github.com/CGYCGY/ffmpeg-lightweight-video-compressor/releases/download/v1.0.0/ffmpeg-lightweight-video-compressor.exe)
 2. Click `Load` and select the folder of your videos located at
 3. Choose what happen if files already exist, options available: [[3]](#note)
    - Ask everytime
