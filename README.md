@@ -17,6 +17,8 @@ This project requires [FFmpeg](https://ffmpeg.org/download.html) to run, [FFmpeg
    - Skip files if exist
    - Delete files if exist
 4. Click `Compress!` to start compress your videos
+5. Ways to force stop:
+   - Navigate to the console window, press `ctrl+c`
 
 ### Note
 1. All videos will be converted to `.mp4`
