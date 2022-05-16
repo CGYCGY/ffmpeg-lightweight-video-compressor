@@ -3,6 +3,8 @@ import sys
 import ffmpeg
 from videoprops import get_video_properties
 
+compress_count = 0
+
 
 def check_exist(hevc, o):
     # check converted filename existence
@@ -20,6 +22,8 @@ def check_exist(hevc, o):
         elif not o:
             print('File exist, skipped')
             return False
+    elif o != '' and not o:  # o == False
+        return ''
     return o
 
 
@@ -38,6 +42,7 @@ def convert_to_mp4(bd, r, fn, o):
 
 
 def compress(bd, r, fn, o):
+    global compress_count
     ori = os.path.join(bd, r[2:], fn)
     props = get_video_properties(ori)
 
@@ -55,6 +60,7 @@ def compress(bd, r, fn, o):
                 # ffmpeg -i "temp" -vcodec libx265 -crf 30 "hevc"
                 ffmpeg.input(temp).output(hevc, vcodec='libx265', crf=30).global_args(o).run(overwrite_output=True)
                 os.remove(temp)
+                compress_count += 1
                 print('Compressed')
             except Exception as exp:
                 print()
@@ -63,11 +69,16 @@ def compress(bd, r, fn, o):
 def main(basedir=os.getcwd(), overwrite=''):
     print('Selected Folder', '===============', basedir, '===============', sep='\n')
     # loop files
+    count = 0
     for root, dirs, files in os.walk(basedir):
         for filename in files:
-            if filename.lower().endswith('.ts') or filename.lower().endswith('.mp4'):
+            if os.path.splitext(filename)[1] in ['.ts', '.mp4', 'mov', '.mkv', '.avi', '.wmv', '.webm', '.flv']:
+                count += 1
+                print('Count: ', count)
                 compress(basedir, root, filename, overwrite)
 
+    print('Total video scanned:', count)
+    print('Total video compressed:', compress_count)
     print('Completed')
 
 
