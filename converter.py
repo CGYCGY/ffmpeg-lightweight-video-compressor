@@ -1,6 +1,8 @@
 import os
 import sys
 
+compress_count = 0
+
 
 def check_exist(hevc, o):
     # check converted filename existence
@@ -32,6 +34,7 @@ def convert_to_mp4(bd, r, fn, o):
 
 
 def compress(bd, r, fn, o):
+    global compress_count
     ori = os.path.join(bd, r[2:], fn)
     codec = os.popen('ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of '
                      'default=noprint_wrappers=1:nokey=1 "{0}"'.format(ori)).read()
@@ -48,17 +51,23 @@ def compress(bd, r, fn, o):
             os.system('ffmpeg {overwrite} -i "{source}" -vcodec libx265 -crf 30 "{output}"'
                       .format(source=temp, output=hevc, overwrite=o))
             os.remove(temp)
+            compress_count += 1
             print('Compressed')
 
 
 def main(basedir=os.getcwd(), overwrite=''):
     print('Selected Folder', '===============', basedir, '===============', sep='\n')
     # loop files
+    count = 0
     for root, dirs, files in os.walk(basedir):
         for filename in files:
             if os.path.splitext(filename)[1] in ['.ts', '.mp4', 'mov', '.mkv', '.avi', '.wmv', '.webm', '.flv']:
+                count += 1
+                print('Count: ', count)
                 compress(basedir, root, filename, overwrite)
 
+    print('Total video scanned:', count)
+    print('Total video compressed:', compress_count)
     print('Completed')
 
 
