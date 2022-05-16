@@ -20,6 +20,8 @@ def check_exist(hevc, o):
         elif not o:
             print('File exist, skipped')
             return False
+    elif o != '' and not o:  # o == False
+        return ''
     return o
 
 
@@ -45,7 +47,7 @@ def compress(bd, r, fn, o):
         hevc = os.path.splitext(ori)[0] + '.mp4'
 
         o = check_exist(hevc, o)
-        if o:
+        if isinstance(o, str):
             print('Start compress', ori, sep='\n')
             os.rename(ori, temp)
             os.system('ffmpeg {overwrite} -i "{source}" -vcodec libx265 -crf 30 "{output}"'
