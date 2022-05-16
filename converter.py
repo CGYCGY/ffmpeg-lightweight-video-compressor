@@ -56,7 +56,7 @@ def main(basedir=os.getcwd(), overwrite=''):
     # loop files
     for root, dirs, files in os.walk(basedir):
         for filename in files:
-            if os.path.splitext(filename)[1] in ['.ts', '.mp4', 'mov', '.mkv']:
+            if os.path.splitext(filename)[1] in ['.ts', '.mp4', 'mov', '.mkv', '.avi', '.wmv', '.webm', '.flv']:
                 print(filename)
                 # compress(basedir, root, filename, overwrite)
 

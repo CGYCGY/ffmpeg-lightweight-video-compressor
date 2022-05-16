@@ -34,5 +34,5 @@ This project requires [FFmpeg](https://ffmpeg.org/download.html) to run, [FFmpeg
    ops! file already exist, what to do?
    check file exist option selected by user!
    ```
-4. Supported video format: `.ts`, `.mp4`, `.mov`, `.mkv`
+4. Supported video format: `.ts`, `.mp4`, `.mov`, `.mkv`, `.avi`, `.wmv`, `.webm`, `.flv`
 5. Tested video format: `.ts`, `.mp4`
