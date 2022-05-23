@@ -1,4 +1,5 @@
 import os
+import re
 import sys
 
 compress_count = 0
@@ -32,7 +33,10 @@ def convert_to_mp4(bd, r, fn, o):
         o = check_exist(mp4, o)
         if o:
             print('convert', ori, 'to', mp4, sep='\n')
-            os.system('ffmpeg {overwrite} -i "{source}" -c copy "{output}"'.format(source=ori, output=mp4, overwrite=o))
+            if re.match('^[a-zA-Z]{2,5}-\d{3,4}', ori):
+                os.system('ffmpeg {overwrite} -i "{source}" -c copy "{output}"'.format(source=ori, output=mp4, overwrite=o))
+            else:
+                os.system('ffmpeg {overwrite} -i "{source}" -c:v copy "{output}"'.format(source=ori, output=mp4, overwrite=o))
 
 
 def compress(bd, r, fn, o):
@@ -57,7 +61,7 @@ def compress(bd, r, fn, o):
             print('Compressed')
 
 
-def main(basedir=os.getcwd(), overwrite=''):
+def main(mode='compress', basedir=os.getcwd(), overwrite=''):
     global compress_count
     print('Selected Folder', '===============', basedir, '===============', sep='\n')
     # loop files
@@ -67,7 +71,10 @@ def main(basedir=os.getcwd(), overwrite=''):
             if os.path.splitext(filename)[1] in ['.ts', '.mp4', 'mov', '.mkv', '.avi', '.wmv', '.webm', '.flv']:
                 count += 1
                 print('Count: ', count)
-                compress(basedir, root, filename, overwrite)
+                if mode == 'compress':
+                    compress(basedir, root, filename, overwrite)
+                elif mode == 'convert_to_mp4':
+                    convert_to_mp4(basedir, root, filename, overwrite)
 
     print('Total video scanned:', count)
     print('Total video compressed:', compress_count)

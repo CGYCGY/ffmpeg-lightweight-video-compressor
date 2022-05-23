@@ -13,13 +13,21 @@ def load_folder():
         file_path_label['text'] = os.getcwd()
 
 
-def start_compress():
+def start(mode='compress'):
     global options
     if file_path_label['text'] and file_path_label['text'] != 'Select A Folder':
         # os.system('python video_converter.py ' + file_path_label['text'])
-        main(file_path_label['text'], options[option.get()])
+        main(mode, file_path_label['text'], options[option.get()])
     else:
-        main(overwrite=options[option.get()])
+        main(mode, overwrite=options[option.get()])
+
+
+def start_compress():
+    start()
+
+
+def start_convert():
+    start('convert_to_mp4')
 
 
 root = tk.Tk()
@@ -35,6 +43,7 @@ option_button_2 = tk.Radiobutton(root, text='Overwrite files if exist', variable
 option_button_3 = tk.Radiobutton(root, text='Skip files if exist', variable=option, value=2)
 option_button_4 = tk.Radiobutton(root, text='Delete files if exist', variable=option, value=3)
 compress_button = tk.Button(root, command=start_compress, text='Compress!', bg='brown', fg='white')
+convert_button = tk.Button(root, command=start_convert, text='Convert!', bg='blue', fg='white')
 
 load_button.pack(pady=10)
 file_path_label.pack()
@@ -43,5 +52,6 @@ option_button_2.pack()
 option_button_3.pack()
 option_button_4.pack()
 compress_button.pack(pady=10)
+convert_button.pack(pady=10)
 
 root.mainloop()
