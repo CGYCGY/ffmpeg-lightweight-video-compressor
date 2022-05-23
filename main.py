@@ -17,9 +17,9 @@ def start(mode='compress'):
     global options
     if file_path_label['text'] and file_path_label['text'] != 'Select A Folder':
         # os.system('python video_converter.py ' + file_path_label['text'])
-        main(mode, file_path_label['text'], options[option.get()])
+        main(mode, file_path_label['text'], options[option.get()], remove=option2)
     else:
-        main(mode, overwrite=options[option.get()])
+        main(mode, overwrite=options[option.get()], remove=option2)
 
 
 def start_compress():
@@ -35,6 +35,7 @@ root.title('Video Compressor')
 root.geometry("300x350")
 
 option = tk.IntVar(value=0)
+option2 = tk.IntVar(value=True)
 
 load_button = tk.Button(root, command=load_folder, text='Load', bg='grey', fg='white')
 file_path_label = tk.Label(root, text=os.getcwd(), fg='green', font=('helvetica', 12, 'bold'), wraplength=190)
@@ -43,6 +44,7 @@ option_button_2 = tk.Radiobutton(root, text='Overwrite files if exist', variable
 option_button_3 = tk.Radiobutton(root, text='Skip files if exist', variable=option, value=2)
 option_button_4 = tk.Radiobutton(root, text='Delete files if exist', variable=option, value=3)
 compress_button = tk.Button(root, command=start_compress, text='Compress!', bg='brown', fg='white')
+option2_button = tk.Checkbutton(root, text='Remove original file', variable=option2)
 convert_button = tk.Button(root, command=start_convert, text='Convert!', bg='blue', fg='white')
 
 load_button.pack(pady=10)
@@ -52,6 +54,7 @@ option_button_2.pack()
 option_button_3.pack()
 option_button_4.pack()
 compress_button.pack(pady=10)
+option2_button.pack()
 convert_button.pack(pady=10)
 
 root.mainloop()

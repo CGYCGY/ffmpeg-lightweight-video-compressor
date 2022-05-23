@@ -26,7 +26,7 @@ def check_exist(hevc, o):
     return o
 
 
-def convert_to_mp4(bd, r, fn, o):
+def convert_to_mp4(bd, r, fn, o, rm):
     ori = os.path.join(bd, r[2:], fn)
     if not ori.lower().endswith('.mp4'):
         mp4 = os.path.splitext(ori)[0] + '.mp4'
@@ -35,8 +35,12 @@ def convert_to_mp4(bd, r, fn, o):
             print('convert', ori, 'to', mp4, sep='\n')
             if re.match('^[a-zA-Z]{2,5}-\d{3,4}', ori):
                 os.system('ffmpeg {overwrite} -i "{source}" -c copy "{output}"'.format(source=ori, output=mp4, overwrite=o))
+                if rm:
+                    os.remove(ori)
             else:
                 os.system('ffmpeg {overwrite} -i "{source}" -c:v copy "{output}"'.format(source=ori, output=mp4, overwrite=o))
+                if rm:
+                    os.remove(ori)
 
 
 def compress(bd, r, fn, o):
@@ -61,7 +65,7 @@ def compress(bd, r, fn, o):
             print('Compressed')
 
 
-def main(mode='compress', basedir=os.getcwd(), overwrite=''):
+def main(mode='compress', basedir=os.getcwd(), overwrite='', remove=True):
     global compress_count
     print('Selected Folder', '===============', basedir, '===============', sep='\n')
     # loop files
@@ -74,7 +78,7 @@ def main(mode='compress', basedir=os.getcwd(), overwrite=''):
                 if mode == 'compress':
                     compress(basedir, root, filename, overwrite)
                 elif mode == 'convert_to_mp4':
-                    convert_to_mp4(basedir, root, filename, overwrite)
+                    convert_to_mp4(basedir, root, filename, overwrite, remove)
 
     print('Total video scanned:', count)
     print('Total video compressed:', compress_count)
