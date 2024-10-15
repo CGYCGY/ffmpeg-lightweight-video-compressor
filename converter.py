@@ -58,7 +58,7 @@ def compress(bd, r, fn, o):
         if isinstance(o, str):
             print('Start compress', ori, sep='\n')
             os.rename(ori, temp)
-            os.system('ffmpeg {overwrite} -i "{source}" -vcodec libx265 -crf 30 "{output}"'
+            os.system('ffmpeg {overwrite} -hwaccel cuda -hwaccel_output_format cuda -i "{source}" -c:v hevc_nvenc -preset p7 -cq 32 -c:a copy "{output}"'
                       .format(source=temp, output=hevc, overwrite=o))
             os.remove(temp)
             compress_count += 1
