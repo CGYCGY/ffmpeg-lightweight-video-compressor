@@ -37,3 +37,7 @@ This project requires [FFmpeg](https://ffmpeg.org/download.html) to run, [FFmpeg
    ```
 4. Supported video format: `.ts`, `.mp4`, `.mov`, `.mkv`, `.avi`, `.wmv`, `.webm`, `.flv`
 5. Tested video format: `.ts`, `.mp4`
+
+### Extras
+1. Generate executable file by:
+   - Run `pyinstaller --onefile .\main.py --name=ffmpeg-lightweight-video-compressor`
